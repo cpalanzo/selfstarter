@@ -1,7 +1,11 @@
 <div class="gray_background" id='share_container'>
   <div class="wrapper center" id="congrats">
     <h2>
-      Hooray! You've just reserved <%= Settings.product_description %>!
+      <% if @order.payment_option_id == 1 || @order.payment_option_id == 2 %>
+        <%= Settings["payment_cheers_#{@order.payment_option_id}".to_sym] %>
+      <% else %>
+        Hooray! You've just reserved <%= Settings.product_description %>! 
+      <% end %>
     </h2>
     <p>Congratulations, you're <%= Settings.primary_stat_verb %> number <span id="backer_number"><%= number_with_delimiter Order.backers, :delimiter => "," %></span>,  in supporting <%= Settings.product_name %>. Share the great news!</p>
     <br />

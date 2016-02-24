@@ -125,6 +125,8 @@ payment_price_1: 25000
 special_1: "founder"
 # to decide if it counts towards the backers & total goal/revenue or not
 counts_1: true
+# text to greet the backer upon funding!
+payment_cheers_1: "WOW! You're now part of our team! Thank you so much !!!!" 
 
 # second button
 payment_button_2: "Special Rate Pre-buy"
@@ -132,7 +134,8 @@ payment_headline_2: "Get a years service at this SPECIAL introductory rate"
 payment_description_2: "Pre-order for just $49.95, the whole first year. "
 payment_price_2: 4995
 special_2: false
-counts_2: false
+counts_2: true
+payment_cheers_2: "Thanks for your introductory subscription!" 
 
 
 ###################Scalable###################
