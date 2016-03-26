@@ -33,7 +33,7 @@ value_proposition: "If you are paid to play, you need this app!"
 
 # YouTube or Vimeo Video URL (The embed URL, without the query string options)
 # Replace /embed/ in your video url path with /v/ for video playback to work.
-video_embed_url: "https://www.youtube.com/embed/MkQcZ8A01AA"
+video_embed_url: <%= ENV['VIDEO_URL'] || raise('env VIDEO_URL not set') %> "https://www.youtube.com/embed/MkQcZ8A01AA"
 
 # If set to true, then the image at "/assets/video_placeholder.png" will be shown in place of the youtube
 # video.  When the user clicks it, the vid will replace the image and start playing.
@@ -140,15 +140,15 @@ payment_cheers_2: "Thanks for your introductory subscription!"
 
 ###################Scalable###################
 ###man and woman descriptive and hex colours##
-m_colors: ['ash', 'safety green']
-m_hex: ['#d7d6d8', '#cde82b']
-w_colors: ['light blue', 'safety pink']
-w_hex: ['#afcdf3', '#e989a4']
+m_colors: <%= ENV['M_COLORS'].split(',') || raise('env M_COLORS not set') %> #['ash', 'safety green']
+m_hex: <%= ENV['M_HEX'].split(',') || raise('env M_HEX not set') %> #['#d7d6d8', '#cde82b']
+w_colors: <%= ENV['W_COLORS'].split(',') || raise('env W_COLORS not set') %> #['light blue', 'safety pink']
+w_hex: <%= ENV['W_HEX'].split(',') || raise('env W_HEX not set') %> #['#afcdf3', '#e989a4']
 m_shirt_model: "gildan-ultra-cotton-t-shirt"
 w_shirt_model: "gildan-ultra-ladies-t-shirt"
 
 ### the designId for the order################
-designId: "56a8b147c2bea75a4095bcd3"
+designId: <%= ENV['DESIGN_ID'] || raise('env DESIGN_ID not set') %> #"56a8b147c2bea75a4095bcd3"
 ### ScalablePress API#########################
 scalable_key: <%= ENV['SCALABLE_KEY'] || raise('env SCALABLE_KEY not set') %>
 
