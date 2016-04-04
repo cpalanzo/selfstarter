@@ -5,10 +5,10 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 gem 'json', '~> 1.7.7'
 gem 'stripe'
+gem 'pry-rails', '~> 0.3.4'
 
 group :development do
   gem 'sqlite3'
-  gem 'pry-rails'
 end
 
 group :production do
@@ -26,7 +26,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
-  gem 'shoulda'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'database_cleaner', '~> 1.4.0'
 end
 
 # jQuery
