@@ -14,40 +14,40 @@
 ActiveRecord::Schema.define(version: 20160202222114) do
 
   create_table "orders", id: false, force: :cascade do |t|
-    t.string   "token",             limit: 255
-    t.string   "transaction_id",    limit: 255
-    t.string   "address_one",       limit: 255
-    t.string   "address_two",       limit: 255
-    t.string   "city",              limit: 255
-    t.string   "state",             limit: 255
-    t.string   "zip",               limit: 255
-    t.string   "country",           limit: 255
-    t.string   "status",            limit: 255
-    t.string   "number",            limit: 255
-    t.string   "uuid",              limit: 255
-    t.string   "user_id",           limit: 255
+    t.string   "token"
+    t.string   "transaction_id"
+    t.string   "address_one"
+    t.string   "address_two"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "status"
+    t.string   "number"
+    t.string   "uuid"
+    t.string   "user_id"
     t.decimal  "price"
     t.decimal  "shipping"
-    t.string   "tracking_number",   limit: 255
-    t.string   "phone",             limit: 255
-    t.string   "name",              limit: 255
+    t.string   "tracking_number"
+    t.string   "phone"
+    t.string   "name"
     t.date     "expiration"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "payment_option_id"
-    t.string   "currency",          limit: 255
+    t.string   "currency"
   end
 
   create_table "payment_options", force: :cascade do |t|
     t.decimal  "amount"
-    t.string   "amount_display", limit: 255
+    t.string   "amount_display"
     t.text     "description"
-    t.string   "shipping_desc",  limit: 255
-    t.string   "delivery_desc",  limit: 255
+    t.string   "shipping_desc"
+    t.string   "delivery_desc"
     t.integer  "limit"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "currency",       limit: 255
+    t.string   "currency"
   end
 
 # Could not dump table "users" because of following NoMethodError
