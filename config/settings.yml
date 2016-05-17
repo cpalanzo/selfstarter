@@ -56,7 +56,7 @@ stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
 stripe_api_key: <%= ENV['STRIPE_API_KEY'] %>
 currency: "usd" # usd, eur etc
 price: 	19.95
-payment_description: "You really should change this text because people will see it on their list of transactions!"
+payment_description: "Your To The Gig Membership!"
 
 # Printful API
 printful_key: <%= ENV['PRINTFUL_KEY'] %>
@@ -104,19 +104,19 @@ pay_in_page: true
 # If payment is in page you can set 2 options
 
 # this is the text for the button
-payment_button_1: "Fund This"
+payment_button_1: "Fund This App"
 # this is the headline
-payment_headline_1: "Be one of only 200 “Founders” and fund our development!"
+payment_headline_1: "Be one of only 200 backers and fund our development!"
 # this is the description
-payment_description_1: "You’ll get a limited addition Founders T-Shirt, and a “Gold” note on your profile for $250! "
+payment_description_1: "You’ll get a limited addition backers T-Shirt and a “Gold” note indicating your support for the app on your profile for $250! "
 # you have to set the price as integer so 1000 is equivalent to 10.00$ or 10$
 payment_price_1: 2500
 special_1: "founder"
 
 # second button
 payment_button_2: "Pre-launch Special"
-payment_headline_2: "Get a years service at this SPECIAL introductory rate"
-payment_description_2: "Pre-order for just $49.95, the whole first year. "
+payment_headline_2: "Get a years service at this SPECIAL introductory rate."
+payment_description_2: "Pre-order for just $49.95, the whole first year. Save over 50%."
 payment_price_2: 4995
 
 
