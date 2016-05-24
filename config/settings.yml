@@ -101,23 +101,31 @@ google_id: <%= ENV['GOOGLE_ID'] %>
 # Set if payment is in the main page or in options page
 pay_in_page: true
 
-# If payment is in page you can set 2 options
-
-# this is the text for the button
-payment_button_1: "Fund This App"
-# this is the headline
-payment_headline_1: "Be one of only 200 backers and fund our development!"
-# this is the description
-payment_description_1: "You’ll get a limited addition backers T-Shirt and a “Gold” note indicating your support for the app on your profile for $250! "
-# you have to set the price as integer so 1000 is equivalent to 10.00$ or 10$
-payment_price_1: 2500
-special_1: "founder"
+# If payment is in page you can set 3 options
 
 # second button
-payment_button_2: "Pre-launch Special"
-payment_headline_2: "Get a years service at this SPECIAL introductory rate."
-payment_description_2: "Pre-order for just $49.95, the whole first year. Save over 50%."
-payment_price_2: 4995
+payment_button_1: "1 Year Subscription"
+payment_headline_1: "$59 special introductory rate, save 50%."
+payment_description_1: "Pre-order for just $59, the whole first year. Be the first to get the app when it launches and save over 50%."
+payment_price_2: 5900
+
+# this is the text for the button
+payment_button_2: "'Kickstart' This App!"
+# this is the headline
+payment_headline_2: "$75 Help fund our work, get a T-shirt!"
+# this is the description
+payment_description_2: "You’ll get a limited addition backers T-Shirt and a “Gold” note indicating your support for the app on your profile for $75! (No subscription included.) "
+# you have to set the price as integer so 1000 is equivalent to 10.00$ or 10$
+payment_price_2: 7500
+special_2: "Backer Only"
+
+
+
+# third button
+payment_button_3: "1 Year + T-Shirt"
+payment_headline_3: "$75 Get it all! Subscription and limited Backers T-Shirt"
+payment_description_3: "Get it all! 1 Year Subscription, Special Editioin Backer T-shirt and Gold note status."
+payment_price_3: 7500
 
 
 ###################Scalable###################
