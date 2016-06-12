@@ -97,11 +97,15 @@ module ScalablepressClientModule
           return { status: issue[:code], path: issue[:path], message: issue[:message], color: color }
         end
       else
-        #if there's no orderToken (because we're still inside that conditional) and it's not a "statusCode" of 400, then it means we have orderIssues. We do the same as with the other one
-        #and return a standardized version of it with only the relevant information we need. You see, when we have errors the "color" didn't appear in the returned hash, so I passed the
-        #color into this function so we could always have access to the color
-        response[:orderIssues].each do |issue|
-          return { status: issue[:code], path: issue[:path], message: issue[:message], color: color }
+        if response[:statusCode] == 500
+          return { status: 'bad_value', path: 'products[0]', message: response[:message], color: color}
+        else      
+          #if there's no orderToken (because we're still inside that conditional) and it's not a "statusCode" of 400, then it means we have orderIssues. We do the same as with the other one
+          #and return a standardized version of it with only the relevant information we need. You see, when we have errors the "color" didn't appear in the returned hash, so I passed the
+          #color into this function so we could always have access to the color
+          response[:orderIssues].each do |issue|
+            return { status: issue[:code], path: issue[:path], message: issue[:message], color: color }
+          end
         end
       end
     else

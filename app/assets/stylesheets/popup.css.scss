@@ -25,6 +25,11 @@ font-size: 1em;
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
+    &:hover {
+      background: #fea100;
+      cursor:pointer;
+      text-decoration: none;
+    }
 }
 
 .white-popup {
@@ -110,4 +115,81 @@ font-size: 1em;
   width: 110%;
   height: 110%;
   color: orange;
+}
+
+
+.flex_popup {
+  display: flex;
+  flex: 1;
+  flex-flow: column wrap;
+  .flex_head {
+    display: flex;
+    flex: 1;
+    flex-flow: row wrap;
+    background-color: rgb(220,220,220);
+    border-radius: 4pt;
+    padding: 20px;
+    align-items: center;
+    .flex_image {
+      width: 100px;
+      max-width: 100px;
+      min-width: 100px;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      img { 
+        border-radius: 50%;
+        border: 2px solid white;
+      }
+    }
+    .flex_title {
+      display: flex;
+      flex: 1;
+      flex-flow: column wrap;
+      padding-left: 50px;
+    }
+  }
+  .flex_row {
+    //display: flex;
+    flex: 1;
+    margin: 20px 0;
+    //flex-flow: column wrap;
+    p { margin-top: 10px; }
+    border-top: 1px solid rgb(150,150,150);
+    border-left: 1px solid rgb(150,150,150);
+    border-radius: 14pt 0 0 0;
+    padding: 0 20px 10px 20px;
+  }
+}
+
+strong {
+  font-weight: bolder;
+}
+em {
+  font-style: italic;
+}
+
+@media screen and (max-width: 600px) {
+  .flex_popup {
+    line-height: 1.3em;
+    .flex_head {
+      flex-flow: column nowrap;
+      .flex_image {
+        img { 
+        }
+        margin-bottom: 20px;
+      }
+      .flex_title {
+        padding-left: 0px;
+        h4, h3 {
+          line-height: 1em;
+          margin: 10px 0px;
+        }
+        h3 { font-size: 1.7em;}
+        h4 { font-size: 1.2em;}
+      }
+    }
+    .flex_row {
+    }
+  }
 }

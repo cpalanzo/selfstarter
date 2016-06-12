@@ -13,10 +13,10 @@ function preparePopup() {
       },
       type: 'inline'
     }, 0);
-  	$(document).on('click', '.popup-position-dismiss', function (e) {
+  	$(document).on('click', '.popup-position-dismiss, .close', function (e) {
   		$.magnificPopup.close();
   	});
-  	$(document).on('click', '.popup-position-confirm', function (e) {
+  	$(document).on('click', '.popup-position-confirm, .close', function (e) {
   		$.magnificPopup.close();
   	});
   }); 
