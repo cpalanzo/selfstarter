@@ -131,10 +131,10 @@ special_3: "founder"
 
 ###################Scalable###################
 ###man and woman descriptive and hex colours##
-m_colors: ['ice grey', 'carolina blue']
-m_hex: ['#adaea9', '#91b0e6']
-w_colors: ['ice grey', 'carolina blue']
-w_hex: ['#adaea9', '#91b0e6']
+m_colors: ENV['M_COLORS'].split(',')
+m_hex: ENV['M_HEX'].split(',')
+w_colors: ENV['W_COLORS'].split(',')
+w_hex: ENV['W_HEX'].split(',')
 m_shirt_model: "gildan-ultra-cotton-t-shirt"
 w_shirt_model: "gildan-ultra-ladies-t-shirt"
 
