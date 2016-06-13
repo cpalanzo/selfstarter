@@ -179,11 +179,11 @@ class PreorderController < ApplicationController
     #here we differentiate according to the gender. If it's male we load the "color" name for the male options along with the hex color we want to match to that option
     #from the settings.yml
     if elements[:gender] == 'male'
-      colors = Settings.m_colors
-      colors_hex = Settings.m_hex
+      colors = Settings.m_colors == 'env' ? ENV['M_COLORS'].split(',') : Settings.m_colors
+      colors_hex = Settings.m_hex == 'env' ? ENV['M_HEX'].split(',') : Settings.m_hex
     else
-      colors = Settings.w_colors
-      colors_hex = Settings.w_hex
+      colors = Settings.w_colors == 'env' ? ENV['W_COLORS'].split(',') : Settings.w_colors
+      colors_hex = Settings.w_hex == 'env' ? ENV['W_HEX'].split(',') : Settings.w_hex
     end
     #since in settings.yml we set the colors as an array, we can call on it the method .each_with_index, what this does it cycles through all elements of the array and passes to
     #the following code both the value of the current element in the array, as well as it's position (index) in the array. Since we know that colors and colors_hex are synchronized
