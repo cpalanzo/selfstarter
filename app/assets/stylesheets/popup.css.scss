@@ -131,14 +131,15 @@ font-size: 1em;
     padding: 20px;
     align-items: center;
     .flex_image {
-      width: 100px;
-      max-width: 100px;
-      min-width: 100px;
+      width: 450px;
+      padding-left: 50px;
+      max-width: 450px;
+      min-width: 200px;
       justify-content: center;
       align-content: center;
       align-items: center;
       img { 
-        border-radius: 50%;
+        border-radius: 10%;
         border: 2px solid white;
       }
     }
