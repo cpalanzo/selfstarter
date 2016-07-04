@@ -132,6 +132,10 @@ designId: <%= ENV['DESIGN_ID'] %>
 
 # Email Settings to:
 mailgun_to: <%= ENV['MAILGUN_TO'] %>
+mailgun_from: <%= ENV['MAILGUN_FROM'] %>
+mailgun_domain: <%= ENV['MAILGUN_DOMAIN'] %>
+mailgun_pwd: <%= ENV['MAILGUN_PWD'] %>
+mailgun_user: <%= ENV['MAILGUN_USER'] %>
 # If you want to change the images for the key points (e.g. "Kickstarter is not a store")
 # They're in app/assets/images/#{pointer_number}-background.png
 # So, the first key point, it's at app/assets/images/1-background.png
