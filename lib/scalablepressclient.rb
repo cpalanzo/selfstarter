@@ -108,7 +108,9 @@ module ScalablepressClientModule
     # We know it's a JSON object, but we need to parse it in order to access it as an hash, and we include "symbolize_names: true", so that we can access the keys/values of the hash
     # by writing hash_name[:key_name]. If we didn't write "symbolize_names: true" we could only access the values by writing hash_name['key_name']. The advantage is that this way 
     # it keeps the same language as when accessing the params hash (params[:key_name]) and because they're symbols, they're much faster to access than with stringed names
+    puts c.body_str
     response = JSON.parse(c.body_str, symbolize_names: true)
+    puts response
     # now our response variables holds a symbolized hash, containing the answer from scalable API and we can pass this hash into another step of our workflow. We also pass the color,
     # because the response from the API doesn't include it 
     check_availability_status(response, elements[:color])
