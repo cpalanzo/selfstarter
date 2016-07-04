@@ -236,7 +236,7 @@ function scalablepressPlaceOrder(color, size, gender, shipping) {
           success: function(data) {
             //and we just redirect the window to the path we'll get as an answer from our back-end - switch batch to preorder_controller.api to follow through
             data = JSON.parse(data);
-            //console.log(data)
+            console.log(data)
             window.location.href = data['path'];
           }
   });
