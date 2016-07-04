@@ -23,6 +23,45 @@ module ScalablepressClientModule
     #this function is in preorder_controller
     response = start_api(basic_uri, elements)
   end
+  
+  def build_availability
+    designId = Settings.designId
+    c = Curl::Easy.new
+    c.url = API_URL + 'products/' + ENV['MALE_MODEL']
+    c.http_auth_types = :basic
+    c.username = ''
+    c.password = SCALABLE_KEY
+    c.verbose = true
+    c.encoding = ''
+    c.perform
+    response_male = JSON.parse(c.body_str, symbolize_names: true)
+    colors_male = build_sizes(response_male[:colors], 'male')
+    c.url = API_URL + 'products/' + ENV['FEMALE_MODEL']
+    c.perform
+    response_female = JSON.parse(c.body_str, symbolize_names: true)
+    colors_female = build_sizes(response_female[:colors], 'female')
+    colors = [ colors_male, colors_female ]
+  end
+  
+  def build_sizes(colors, gender)
+    array_colors = []
+    sizes = { gender: gender, available: [] }
+    colors.each do |color|
+      color[:sizes].each do |size|
+        size.downcase!
+        color_obj = {
+          name: color[:name],
+          hex: color[:hex]
+        }
+        if !sizes.has_key?(size.to_sym)
+          sizes[size.to_sym] = []
+          sizes[:available].push(size)
+        end
+        sizes[size.to_sym].push(color_obj)
+      end
+    end
+    return sizes
+  end
 
 	# here we assemble together our first call - this functions takes both the parsed url and the elements hash with the values we need to make the call
   def start_api(uri, elements)
@@ -111,7 +150,12 @@ module ScalablepressClientModule
     else
       #in case we do have an orderToken, it means that our quote is ready to be ordered. I cleaned up the answer and made my own answer with the things I really needed. It could be slimmed
       #down a bit even further.
-      return { status: 'ok', total: response[:total], subtotal: response[:subtotal], fees: response[:fees], tax: response[:tax], shipping: response[:shipping], orderToken: response[:orderToken], mode: response[:mode] }
+      if response[:total].to_f <= 30.00
+        place_order(response[:orderToken])
+      else
+        return { status: 'error', answer: 'Over 30$' }
+      end
+      #return { status: 'ok', total: response[:total], subtotal: response[:subtotal], fees: response[:fees], tax: response[:tax], shipping: response[:shipping], orderToken: response[:orderToken], mode: response[:mode] }
     end
     #so this function actually ends up here, whatever the case scenario it returns a hash with some information - this bubbles up to the function/method that called it
     # and from there it bubbles up to the next level from which that one was called. In the end what we have is what was returned by this function, in the response variable we set
@@ -143,14 +187,14 @@ module ScalablepressClientModule
       #after changing the url we can just call .http_post, simply enconding a field with orderToken and the order will be made effective
       c.http_post(Curl::PostField.content('orderToken', token))
       #we save the answer
-      response = c.body_str
+      response = JSON.parse(c.body_str, symbolize_names: true)
     else
       #this else is in case the order total is higher than 30$ 
       #send email or do something else
     end
     #here we return both the "order" id, as well as the "full" response we got from the API - this bubbbles to the function that called this function - so back to preorder_controller.rb
     #since at this point a quote will always be placed the only thing thatcan happen is the total value being higher than 30 and we've taken care of it as well
-    return { order_id: token, answer: response }
+    return { status: 'success', order_id: token, answer: response }
   end
 end
 

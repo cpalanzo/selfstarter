@@ -39,10 +39,13 @@ var ready = function() {
       });
     }
   });
+  
+  
   //does the binding for "payable" and for "button"
   $.each(['payable', 'button'], function() {
     //the actual binding. First we "unbind" then we create a on click event listener
     $('.' + this).unbind().on('click', function(e) {
+      $('.chosenoption').removeClass('chosenoption');
       //prevents any default action. So when somebody "clicks" this element "e" is passed as the object of it, if "e" has any fundamental action happening we stop it with preventDefault() - this is a standard JS
       //method;
       e.preventDefault();
@@ -75,6 +78,8 @@ var ready = function() {
         // our structue of the html, in the single page with 2 options, the transaction info is embedded directly on the button.
         $(this).addClass('chosenoption');
       }
+      
+
       // here we open stripe popup (this is also part of their library)
       handler.open({
         name: 'ToTheGig',
@@ -86,6 +91,7 @@ var ready = function() {
         shippingAddress: true,
         billingAddress: true
       });
+      
     });
     
     // Close Checkout on page navigation
@@ -93,7 +99,68 @@ var ready = function() {
       handler.close();
     });
   });
+  
+  $("input[name='gender']").change(function(e) {
+    var source = $(this).val().toLowerCase();
+    var old = source == 'male' ? 'female' : 'male';
+    $('div[class$=' + old + '_size]').hide();
+    $('select[name=size_' + old + ']').prop('disabled', true);
+    $('select[name=size_' + source + ']').prop('disabled', false);
+    $('.' + source + '_size').show(100);
+  });
 };
+
+function build_options(data, shipping) {
+  $.each(data, function (index, gender) {
+    var gender_type = gender['gender'];
+    var sizes = gender['available'];
+    $('#color_holder').append('<div class="gender_available" id="' + gender_type + '"></div>');
+    $('select[name="size_' + gender_type + '"]').html('');
+    $.each(sizes, function (index, value) {
+        $('select[name="size_' + gender_type + '"]').append($('<option/>', { 
+            value: value,
+            text : value.toUpperCase()
+        }));
+        $('#' + gender_type).append('<div class="column-flex" id="size_' + value + '_' + gender_type + '"></div>');
+        $.each(gender[value], function (index, color) {
+          $('#size_' + value + '_' + gender_type).append('<div class="color-choice" style="background-color: #' + color['hex'] + '" data-choice="' + color['name'] + '" data-gender="' + gender_type + '" data-size="' + value + '"></div>');
+        });
+    });
+  });
+  $('.color-choice').off('click').on('click', function() {
+    var color = $(this).data('choice');
+    var size = $(this).data('size');
+    var gender = $(this).data('gender');
+    scalablepressPlaceOrder(color, size, gender, shipping);
+  });
+  $.magnificPopup.open({
+    items: {
+      src: "#select_details"
+    },
+    type: 'inline',
+    modal: true
+  }, 0);
+  
+	$(document).on('click', '.confirm_select_modal', function (e) {
+    var gender = $('input[name=gender]:checked').val().toLowerCase();
+    var size = $('select[name=size_' + gender + ']').val().toLowerCase();
+    $('#submit_holder').hide(200, 'swing');
+    $('#details_holder').hide(200, 'swing');
+    $('#color_holder').append('<div id="back_holder"><button class="back_select">Back</button></div>');
+    $('.back_select').off('click').on('click', function(){
+      $('#color_holder').hide(200, 'swing');
+      $('#' + gender).hide(0).find('#size_' + size + '_' + gender).hide(0);
+      $('#submit_holder').show(0);
+      $('#details_holder').show(400, 'swing');
+      $('#back_holder').remove();
+    });
+    $('#' + gender).show(0).find('#size_' + size + '_' + gender).show(0);
+    $('#color_holder').show(400, 'swing');
+	});
+	$(document).on('click', '.close_select_modal', function (e) {
+    $.magnificPopup.close();
+	});
+}
 
 //this functions relies on our previous assignment of "chosenoption" to figure out the correct data we need for the transaction
 function setData() {
@@ -118,234 +185,61 @@ function setData() {
   return information;
 };
 
-/* this was for printful call
-function printfulCall(redirectTo) {
-  $.ajax({
-          url: '/preorder/printfulcall',
-          type: "POST",
-          dataType: "html",
-          data: {
-
-          },
-          success: function(data) {
-            alert(JSON.stringify(data));
-            window.location.href = redirectTo;
-          }
-  });
-};
-*/
-
 
 //this is the function that gets called once we receive a success callback from our ajax for creating a stripe charge, as you see it takes two values - data is what was returned by our app and founder is simple a boolean var stating if this payment includes a t-shirt order or not.
 function selectDetails(data, founder) {
   //since we returned the data as a "json" object from our back-end we need to parse it so we can access it as a regular object.
   data = JSON.parse(data);
+  console.log(data);
   //here we check if the payment included a t-shirt (we pass this value previously of course)
   if (founder == "founder") {
-    //if it does we use magnificPopup. Since we have it loaded through application.js, all we need to do is the following.
-    $.magnificPopup.open({
-      //magnific popup offers pretty much all options you need, in this case we are going to use it as a "modal" popup, this means everything is blocked outside the popup
-      //this way we can make sure the user has to choose the options or cancel deliberately. That is done by setting the key "modal" to true.
-      //We also set it as an inline popup - this means it will load directly from the existing DOM - we can pass other values here instead to open an AJAX popup, an image popup, or iframe.
-      //since the default is image type we need to explicitly say we want an inline.
-      //Then we define the items that will be in this popup. Since we chose inline, we need to set the "src" (source) key to the #ID of the element. This has to match, otherwise the popup doesn't open
-      //you can check it here http://dimsemenov.com/plugins/magnific-popup/documentation.html#inline-type
-      items: {
-        src: "#select_details"
-      },
-      type: 'inline',
-      modal: true
-    }, 0);
-    //then, since we have a modal we need to create the button binding that allow users to interact with it. In this case we create first the one for submitting the t-shirt choice
-  	$(document).on('click', '.confirm_select_modal', function (e) {
-      //first we fetch the chosen "size" value from our "select" element which has an ID of "size", we do that by fetching the jquery element, returning it's value with .val(), and lastly
-      //we make it lowercase, just because
-      var size = $('select#size').val().toLowerCase();
-      //then we fetch the chosen gender - we do this by fetching the jquery element of input that has the name attribute as "gender", and is simultaneously "checked" (if we didn't put the checked
-    // we would not fetch the right value, actually we would fetch both elements and this wouldn't work, since they're a radio group, both radio buttons have the same name, so what separates them
-    // is being checked or not)
-      var gender = $('input[name=gender]:checked').val()
-      //then we check to see if the user has chosen one of the two gender options we provide
-      if (gender) {
-        //in case he did we also lowercase it
-        gender = gender.toLowerCase();
-      }
-      //then we check if the user has selected both fields
-      if (size && gender) {
-        //if he has we then can proceed to the first call to scalable press - we pass again the data-hash that we have been jumping around, we pass the chosen size, and the gender and we call
-        //our format_address function, that basically, prepares the shipping address
-        scalablepressCall(data, size, gender, format_address(data));
-      } else {
-        //if one or both of the values weren't chosen by the user, we display a small alert error. We have already coded this section into the html and we had it hidden direclty with 
-        // style="display: none;". This way we just need to call "show", making it "swing" in a bit less than half a second. Then we set the callback to a JS timer with setTimeout
-        //what this means is that once the animation to show the alert is finished, it triggers the timer
-        $('#alert_no_selection').show(400, 'swing', setTimeout(function() {
-          //we set this timer to 3 seconds - 3000, which makes the alert stay 3 seconds
-          $('#alert_no_selection').hide(400, 'swing');
-          //then once the timer hits its mark, we hide once again the #alert section. This time we don't set any callback function to .hide()
-        }, 3000));
-      }
-  	});
-    //here we simply set that if the user clicks the button with the class "close_select_modal" we close the modal. Magnific Popup makes it really use to use. 
-  	$(document).on('click', '.close_select_modal', function (e) {
-      //this closes the currently opened magnificPopup. Since we can in this case only have one popup open we don't really need anything else - this will close the modal
-      $.magnificPopup.close();
-  	});
-    
+    var shipping = format_address(data['shipping']);
+    $.ajax({
+            url: '/preorder/scalablepresscall',
+            type: "POST",
+            dataType: "html",
+            success: function(data) {
+              data = JSON.parse(data);
+              //console.log(data);
+              build_options(data, shipping);
+            }
+    });
   } /* in case this callback wasn't from an option that offered a tee, we simply redirect the user to the "share" path we also retrieved through the api */ 
   else {
     window.location.href = data['path'];
   }
 };
 
-//this is a simple function used to format the address. Since we have the data hash we sent through our back-end, we can safely create those values and simply return them. We could even jump over
-//the var declarations and put return { names: data['shipping']['shipping_name'], etc, etc } but it makes it less readable
-function format_address(data) {
-  shipping = data['shipping'];
-  var names = shipping['shipping_name'];
-  var country = shipping['shipping_address_country_code'];
-  var address = shipping['shipping_address_line1'];
-  var state = shipping['shipping_address_state'];
-  var city = shipping['shipping_address_city'];
-  var zip = shipping['shipping_address_zip'];
+//this is a simple function used to format the address. Since we have the data hash we sent through our back-end, we can safely create those values and simply return them.
+function format_address(shipping) {
   return {
-    names: names,
-    country: country,
-    address: address,
-    state: state,
-    city: city,
-    zip: zip
+    names: shipping['shipping_name'],
+    country: shipping['shipping_address_country_code'],
+    address: shipping['shipping_address_line1'],
+    state: shipping['shipping_address_state'],
+    city: shipping['shipping_address_city'],
+    zip: shipping['shipping_address_zip']
   }
 }
 
-//so if the user has chosen both a gender and size, this function is called - the address argument is what format_address returns
-function scalablepressCall(redirectTo, size, gender, address) {
-  //we start by making a jquery ajax call
+function scalablepressPlaceOrder(color, size, gender, shipping) {
   $.ajax({
-    //here we set the path of the call we already have this routed
-          url: '/preorder/scalablepresscall',
-    //the type...
-          type: "POST",
-          dataType: "html",
-    //here we pass the data we want to work with. The size, gender and the address which is actually the hash that was returned by format_address
-          data: {
-            size: size,
-            gender: gender,
-            address: address
-          },
-          //here we the call back for the ajax call success
-          success: function(data) {
-            //on success we call checkResponse and pass as an argument the data that we set our back-end to give
-            //so now we need to follow this on the preorder_controller once again. Remember since the path is /preorder/scalablepresscall we will have a param[:to_action] === 'scalablepresscall' in our controller.
-            checkResponse(data);
-          }
-  });
-};
-
-//so here is where we check what was returned by our scalablepress call to quote the items. Inside our app we already know what happened, but it's in the front-end that we need to interact
-function checkResponse(data) {
-  var colors = [];
-  var eachToken = [];
-  //again we parse the data so we can access it as a regular object
-  data = JSON.parse(data);
-  //we use jquery $.each with the "data" object, because we will have an array of answers as long as we have more than one colour to test. And as I wrote there, we might have a combination of color & size unavailable
-  //but somehow another combination might be available. So we loop through all the answers - they end up here as [ { answer1 }, { answer2 } ], but even if only one answer it will still be [ { answer1 } ]
-  $.each(data, function(i, _this) {
-    // "i" is the index and "_this" is the object itself, in this case it's the hash we passed from the response
-    if (_this['status'] == 'ok') {
-      // if the status is "ok" we know this color is available and we "push" it into our "colors" array, doing the same with the corresponding "orderToken"
-      colors.push(_this['color_hex']);
-      eachToken.push(_this['orderToken']);
-    } else {
-      // if the status isn't "ok" then we check which kind of error. right now the address part doesn't work as we've changed it to stripe address, but before this was how we checked if the address was valid.
-      switch (_this['type']) {
-      case 'address':
-        $('#alert_' + _this['field']).show();
-        $('#alert_shipping').show(400, 'swing', setTimeout(function() {
-          $('#alert_shipping').hide(400, 'swing');
-          $('#alert_' + _this['field']).hide();
-        }, 3000));
-        return false;
-      case 'product':
-        //in case the availability is off we show the "alert" section for it
-        $('#alert_not_available').show(400, 'swing', setTimeout(function() {
-          $('#alert_not_available').hide(400, 'swing');
-        }, 6000));
-        return false;
-      }
-    }
-  });
-  //in the end, if we have any of the colors available, we just call showColors and pass to it both our arrays, containing the colors to show, and the token to finish the order corresponding to that color
-  //this way we can build the next interaction with the user
-  if (colors.length > 0) {
-    showColors(colors, eachToken);
-  }
-};
-
-function showColors(colors, eachToken) {
-  //so this is how it works with no matter how many colors you insert into settings.yml. We made it so that it could take any number of values and programatically retrieve the availability for each one
-  //and we do the same now to show the colors
-  $.each(colors, function(i, _this) {
-    //we use jquery selector targeting the element with ID color_holder . We know that inside this element there's a "column-flex" div, because we architectured the html of course. And it's inside this div
-    //that we want to insert a new div, that basically has a border, is responsive to hover and has all the information as data fields to proceed with the process once clicked
-    //if instead of using $.each(colors.....) we user $.each(eachToken....) then on the next line we would swap _this for colors[i] and eachToken[i] to _this
-    $('#color_holder').children('.column-flex').prepend("<div class='color-choice' style='background-color: " + _this + "' data-choice='" + eachToken[i] + "'></div>");
-    //after inserting this element into the div with class column-flex that is the children of a div with id color_holder we need to bind to it the click handler.
-    //this is a case that if you don't use the .off('click') or .unbind() before "binding" it with .on('click') you will have problems. For instance the first inserted element will trigger fine.
-    //the second element will trigger twice, and if you add more colors each one will trigger one more time than the previous one.
-    $('.color-choice').off('click').on('click', function() {
-      //now we say that whenever the user "clicks", this particular element, we fetch the data-choice field from the element (which we made to hold the orderToken) and call the scalablepressPlaceOrder function
-      var token = $(this).data('choice');
-      scalablepressPlaceOrder(token);
-    });
-  });
-  //we finish this part off by hiding the submit button, hiding the details_holder section and showing the section for the colors.
-  $('#submit_holder').hide(200, 'swing');
-  $('#details_holder').hide(200, 'swing');
-  $('#color_holder').show(400, 'swing');
-};
-
-
-//this one is called whenever somebody clicks one of the elements we prepared in the previous function
-function scalablepressPlaceOrder(token) {
-  $.ajax({
-    //it follows the same structure
           url: '/preorder/scalablepressorder',
           type: "POST",
           dataType: "html",
           data: {
-            //we only pass the token as it's the only thing we need at this point
-            token: token
+            color: color,
+            size: size,
+            gender: gender,
+            shipping: shipping
           },
           success: function(data) {
             //and we just redirect the window to the path we'll get as an answer from our back-end - switch batch to preorder_controller.api to follow through
-            window.location.href = data;
+            data = JSON.parse(data);
+            //console.log(data)
+            window.location.href = data['path'];
           }
   });
-};
-
-//This was used before when I was validating the address. So what I did before we used the stripe address was checking if the values where at least filled. If they were, I would return them, if they were not
-//I would show an alert - in the meanwhile I also took the alert section from the html but left this so you could see.
-function checkStateZip() {
-  var country = $('#country_country').val();
-  var address = $('#address').val();
-  var state = $('#state').val();
-  var city = $('#city').val();
-  var zip = $('#zip').val();
-  if (country && state && city && zip) {
-    return {
-      country: country, 
-      address: address,
-      state: state, 
-      city: city, 
-      zip: zip 
-    }
-  } else {
-    $('#alert_shipping').show(400, 'swing', setTimeout(function() {
-      $('#alert_shipping').hide(400, 'swing');
-    }, 3000));
-    return false
-  }
 };
 
 //this is a jquery function I found. Together with the isMobile code below it finds if the user agent viewing the page is mobile, and if it is, adds a css class named smalldisplay which I used in CSS to format it correctly with padding for mobile viewing

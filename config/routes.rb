@@ -6,4 +6,6 @@ Selfstarter::Application.routes.draw do
 
   get '/preorder/share/:uuid' => 'preorder#share', as: :share
   post '/preorder/ipn'       => 'preorder#ipn'
+  
+  get '/preorder/:to_action' => 'preorder#decide', as: :decide
 end

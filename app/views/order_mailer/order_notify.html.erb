@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @user.name %></h1>
+    <p>Just to let you know that your donation of <%= number_to_currency(@order.price.to_f , separator: ".", delimiter: ",") %> was received.</p>
+    <% if @founder%>
+      <p>Your t-shirt will soon arrive!</p>
+    <% end %>
+    <p>Thank you so much for supporting 2theGig,</p>
+    <p>all the best,</p>
+    </br>
+    <p>2theGig crew</p>
+    </p>
+  </body>
+</html>

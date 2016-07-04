@@ -67,4 +67,14 @@ Selfstarter::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.action_mailer.delivery_method = :smtp
+  # SMTP settings for mailgun
+  config.action_mailer.smtp_settings = {
+    :port           => 587,
+    :address        => "smtp.mailgun.org",
+    :domain         => ENV['MAILGUN_DOMAIN'],
+    :user_name      => ENV['MAILGUN_USER'],
+    :password       => ENV['MAILGUN_PWD'],
+    :authentication => :plain,
+  }}
 end

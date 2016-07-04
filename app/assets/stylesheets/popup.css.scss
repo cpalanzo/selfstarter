@@ -47,11 +47,31 @@ font-size: 1em;
     font-weight: 400;
     margin-top: 20px;
   }
-  select {
-    text-align: center;
-    width: 100%;
-    margin-top: 15px;
-    margin-bottom: 25px;
+  .styled-select {
+     height: 29px;
+     width: 240px;
+     margin: 20px 0px;
+  }
+
+  .styled-select select {
+     background: transparent;
+     border: none;
+     font-size: 14px;
+     height: 29px;
+     padding: 5px;
+     width: 268px;
+  }
+
+  .styled-select.slate {
+     height: 34px;
+     width: 240px;
+  }
+
+  .styled-select.slate select {
+     border: 1px solid #ccc;
+     font-size: 16px;
+     height: 34px;
+     width: 268px;
   }
   label {
     font-size: 1em;
@@ -90,7 +110,7 @@ font-size: 1em;
     margin-top: 50px;
     margin-bottom: 10px;
   }
-  #cancel_holder {
+  #cancel_holder, #back_holder {
    margin-top: 30px;
    margin-bottom: 30px; 
   }
@@ -102,6 +122,19 @@ font-size: 1em;
   }
   hr {
     margin-top: 15px;
+  }
+  
+  div[class^=female_size], div[class$=female_size] {
+    display: none;
+  }
+  #male, #female, div[id^=size_] {
+    display: none;
+  }
+  
+  .options_gender {
+    min-height: 100px;
+    height: 100px;
+    max-height: 100px;
   }
 }
 

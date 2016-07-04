@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @user.name %> just funded 2theGig!</h1>
+    <p>Amount: <%= number_to_currency(@order.price.to_f , separator: ".", delimiter: ",") %></p>
+    <p>Stripe Charge ID: <%= @user.stripe_charge_id %></p>
+    <p>Option Chosen: <%= @order.payment_option_id %></p>
+    <% if @founder%>
+      <p>This user also ordered a T-Shirt with the following details:</p>
+      <pre><%= @info %></pre>
+    <% end %>
+  </body>
+</html>

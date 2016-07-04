@@ -52,14 +52,11 @@ use_payment_options: true
 
 #stripe_api_key: "YOUR_STRIPE_API_KEY"
 #stripe_public_key: "YOUR_STRIPE_PUBLIC_KEY"
-stripe_public_key: <%= ENV['STRIPE_PUBLIC_KEY'] %>
-stripe_api_key: <%= ENV['STRIPE_API_KEY'] %>
+stripe_public_key: <%= ENV['STRIPE_PUB_KEY'] %>
+stripe_api_key: <%= ENV['STRIPE_PRIVATE_KEY'] %>
 currency: "usd" # usd, eur etc
 price: 	19.95
 payment_description: "Your To The Gig Membership!"
-
-# Printful API
-printful_key: <%= ENV['PRINTFUL_KEY'] %>
 
 
 # On Lockitron, it's "backers"
@@ -131,10 +128,10 @@ special_3: "founder"
 
 ###################Scalable###################
 ###man and woman descriptive and hex colours##
-m_colors: "env"
-m_hex: "env"
-w_colors: "env"
-w_hex: "env"
+# m_colors: "env"
+# m_hex: "env"
+# w_colors: "env"
+# w_hex: "env"
 m_shirt_model: "gildan-ultra-cotton-t-shirt"
 w_shirt_model: "gildan-ultra-ladies-t-shirt"
 

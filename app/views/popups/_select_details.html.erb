@@ -1,10 +1,17 @@
 <div id="select_details" class="white-popup mfp-hide">
   <div id="details_holder">
     <h2>Details for the tee</h2>
-    <%= label_tag "size", "Size" %>
-    <%= select_tag "size", options_for_select([["XXSML", "XXSML"], ["XSML", "XSML"], ['SML', 'SML'], ["MED", "MED"], ["LRG", "LRG"], ["XLG", "XLG"], ["XXL", "XXL"], ["XXXL", "XXXL"], ["XXXXL", "XXXXL"], ["XXXXXL", "XXXXXL"], ["XXXXXXL", "XXXXXXL"]]), include_blank: "Choose an option" %>
+    <div class="options_gender">
+      <%= label_tag "size", "Size" %>
+      <div class="styled-select slate male_size">
+        <%= select_tag "size_male", options_for_select([["XXSML", "XXSML"], ["XSML", "XSML"], ['SML', 'SML'], ["MED", "MED"], ["LRG", "LRG"], ["XLG", "XLG"], ["XXL", "XXL"], ["XXXL", "XXXL"], ["XXXXL", "XXXXL"], ["XXXXXL", "XXXXXL"], ["XXXXXXL", "XXXXXXL"]]), include_blank: "Choose an option" %>
+      </div>
+      <div class="styled-select slate female_size">
+        <%= select_tag "size_female", options_for_select([["XXSML", "XXSML"], ["XSML", "XSML"], ['SML', 'SML'], ["MED", "MED"], ["LRG", "LRG"], ["XLG", "XLG"], ["XXL", "XXL"], ["XXXL", "XXXL"], ["XXXXL", "XXXXL"], ["XXXXXL", "XXXXXL"], ["XXXXXXL", "XXXXXXL"]]), include_blank: "Choose an option", disabled: true %>
+      </div>
+    </div>
     <%= label_tag "Male" %>
-    <%= radio_button_tag "gender", "Male" %>
+    <%= radio_button_tag "gender", "Male", true %>
     <%= label_tag "Female" %>
     <%= radio_button_tag "gender", "Female" %>
     <div style="display: none" id="alert_no_selection">
@@ -17,7 +24,6 @@
   </div>
   <div style="display: none" id="color_holder">
     <h2>Choose your color!</h2>
-    <div class="column-flex"></div>
   </div>
   <div id="submit_holder">
     <button class="confirm_select_modal">Choose</button>
