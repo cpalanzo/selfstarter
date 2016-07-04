@@ -130,6 +130,8 @@ special_3: "founder"
 scalable_key: <%= ENV['SCALABLE_KEY'] %>
 designId: <%= ENV['DESIGN_ID'] %>
 
+# Email Settings to:
+mailgun_to: <%= ENV['MAILGUN_TO'] %>
 # If you want to change the images for the key points (e.g. "Kickstarter is not a store")
 # They're in app/assets/images/#{pointer_number}-background.png
 # So, the first key point, it's at app/assets/images/1-background.png

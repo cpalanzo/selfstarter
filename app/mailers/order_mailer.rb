@@ -13,7 +13,7 @@ class OrderMailer < ApplicationMailer
     @user = user
     @order = order
     @founder = founder
-    mail(to: ENV['MAILGUN_TO'], subject: 'Someone backed you!')
+    mail(to: Settings.mailgun_to, subject: 'Someone backed you!')
   end
   
 end
