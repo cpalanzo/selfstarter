@@ -13,7 +13,6 @@ module ScalablepressClientModule
 
   #we set some constants, including the base url for the API and the Scalablepress API Key - we set it in settings to point to an environment variable
 	API_URL = 'https://api.scalablepress.com/v2/'
-  SCALABLE_KEY = ENV['SCALABLE_KEY']
   
   # so this is the first call
   def start_request(elements)
@@ -30,7 +29,7 @@ module ScalablepressClientModule
     c.url = API_URL + 'products/' + ENV['MALE_MODEL']
     c.http_auth_types = :basic
     c.username = ''
-    c.password = SCALABLE_KEY
+    c.password = ENV['SCALABLE_KEY']
     c.verbose = true
     c.encoding = ''
     c.perform
@@ -81,7 +80,7 @@ module ScalablepressClientModule
     # so we set the username to ''
     c.username = ''
     # then the password - with both this settings when we call the curl connection it will be as if we did -u ":password_api_key"
-    c.password = SCALABLE_KEY
+    c.password = ENV['SCALABLE_KEY']
     # this just creates a verbose output when the command is run. We don't really need it, but if you test the app in localhost and open the terminal window you'll see that it
     # outputs the connection information as it is made - it's quite useful for debbuging
     c.verbose = true
@@ -173,7 +172,7 @@ module ScalablepressClientModule
     c.url = uri
     c.http_auth_types = :basic
     c.username = ''
-    c.password = SCALABLE_KEY
+    c.password = ENV['SCALABLE_KEY']
     c.verbose = true
     c.encoding = ''
     #but here, since we are doing a "get" request to the api to retrieve the "quote" we already made, we just need to call .perform on our instance of curl.
