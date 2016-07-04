@@ -100,7 +100,7 @@ class PreorderController < ApplicationController
     elements[:size] = params[:size]
     elements[:color] = params[:color]
     elements[:product] = elements[:gender] == 'male' ? Settings.m_shirt_model : Settings.w_shirt_model
-    elements[:address_name] = shipping[:names]
+    elements[:address_name] = shipping[:name]
     elements[:address_address] = shipping[:address]
     elements[:address_city] = shipping[:city]
     elements[:address_state] = shipping[:state]
@@ -117,7 +117,7 @@ class PreorderController < ApplicationController
       pf = ScalablepressClient.new
       quote = pf.start_request(elements)
     
-      @user.update(name: shipping[:names], api_order_id: quote[:order_id], order_data: quote[:answer].to_json)
+      @user.update(name: shipping[:name], api_order_id: quote[:order_id], order_data: quote[:answer].to_json)
       @order.update(status: 'fulfilled')
       send_emails(quote[:answer], @user, @order, true)
     
