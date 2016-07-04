@@ -66,7 +66,7 @@ module ScalablepressClientModule
 	# here we assemble together our first call - this functions takes both the parsed url and the elements hash with the values we need to make the call
   def start_api(uri, elements)
     #we fetch the designId from the settings.yml - in case you want to use a different design you just need to change it in settings.yml
-    designId = Settings.designId
+    designId = ENV['DESIGN_ID']
     #I've used curl as it made the operation with this API easier - I was having troubles with http and in order to not loose further time I settled for using curb
     #it also follows curl (curb is a curl wrapper for ruby)
     #we initiate a new instance of a Curl request. We call Curl::Easy.new because we don't need multiple simulatenous queries.
