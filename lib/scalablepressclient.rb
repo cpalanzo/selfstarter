@@ -81,6 +81,11 @@ module ScalablepressClientModule
     c.username = ''
     # then the password - with both this settings when we call the curl connection it will be as if we did -u ":password_api_key"
     c.password = ENV['SCALABLE_KEY']
+    puts "KEY::::::::::::::"
+    puts = c.password
+    puts "ENV::::::::::::::"
+    puts = ENV['SCALABLE_KEY']
+    
     # this just creates a verbose output when the command is run. We don't really need it, but if you test the app in localhost and open the terminal window you'll see that it
     # outputs the connection information as it is made - it's quite useful for debbuging
     c.verbose = true
