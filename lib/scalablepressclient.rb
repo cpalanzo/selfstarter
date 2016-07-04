@@ -13,6 +13,7 @@ module ScalablepressClientModule
 
   #we set some constants, including the base url for the API and the Scalablepress API Key - we set it in settings to point to an environment variable
 	API_URL = 'https://api.scalablepress.com/v2/'
+  SCALABLE_KEY = Settings.scalable_key
   
   # so this is the first call
   def start_request(elements)
@@ -24,12 +25,12 @@ module ScalablepressClientModule
   end
   
   def build_availability
-    designId = ENV['DESIGN_ID']
+    designId = Settings.designId
     c = Curl::Easy.new
     c.url = API_URL + 'products/' + ENV['MALE_MODEL']
     c.http_auth_types = :basic
     c.username = ''
-    c.password = ENV['SCALABLE_KEY']
+    c.password = SCALABLE_KEY
     c.verbose = true
     c.encoding = ''
     c.perform
@@ -65,7 +66,7 @@ module ScalablepressClientModule
 	# here we assemble together our first call - this functions takes both the parsed url and the elements hash with the values we need to make the call
   def start_api(uri, elements)
     #we fetch the designId from the settings.yml - in case you want to use a different design you just need to change it in settings.yml
-    designId = ENV['DESIGN_ID']
+    designId = Settings.designId
     #I've used curl as it made the operation with this API easier - I was having troubles with http and in order to not loose further time I settled for using curb
     #it also follows curl (curb is a curl wrapper for ruby)
     #we initiate a new instance of a Curl request. We call Curl::Easy.new because we don't need multiple simulatenous queries.
@@ -80,12 +81,7 @@ module ScalablepressClientModule
     # so we set the username to ''
     c.username = ''
     # then the password - with both this settings when we call the curl connection it will be as if we did -u ":password_api_key"
-    c.password = ENV['SCALABLE_KEY']
-    puts "KEY::::::::::::::"
-    puts = c.password
-    puts "ENV::::::::::::::"
-    puts = ENV['SCALABLE_KEY']
-    
+    c.password = SCALABLE_KEY
     # this just creates a verbose output when the command is run. We don't really need it, but if you test the app in localhost and open the terminal window you'll see that it
     # outputs the connection information as it is made - it's quite useful for debbuging
     c.verbose = true
@@ -112,9 +108,7 @@ module ScalablepressClientModule
     # We know it's a JSON object, but we need to parse it in order to access it as an hash, and we include "symbolize_names: true", so that we can access the keys/values of the hash
     # by writing hash_name[:key_name]. If we didn't write "symbolize_names: true" we could only access the values by writing hash_name['key_name']. The advantage is that this way 
     # it keeps the same language as when accessing the params hash (params[:key_name]) and because they're symbols, they're much faster to access than with stringed names
-    puts c.body_str
     response = JSON.parse(c.body_str, symbolize_names: true)
-    puts response
     # now our response variables holds a symbolized hash, containing the answer from scalable API and we can pass this hash into another step of our workflow. We also pass the color,
     # because the response from the API doesn't include it 
     check_availability_status(response, elements[:color])
@@ -177,7 +171,7 @@ module ScalablepressClientModule
     c.url = uri
     c.http_auth_types = :basic
     c.username = ''
-    c.password = ENV['SCALABLE_KEY']
+    c.password = SCALABLE_KEY
     c.verbose = true
     c.encoding = ''
     #but here, since we are doing a "get" request to the api to retrieve the "quote" we already made, we just need to call .perform on our instance of curl.

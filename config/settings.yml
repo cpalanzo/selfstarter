@@ -125,6 +125,11 @@ payment_description_3: "Get it all! 1 Year Subscription, Special Edition Backer'
 payment_price_3: 7900
 special_3: "founder"
 
+
+# ScalablePress
+scalable_key: <%= ENV['SCALABLE_KEY'] %>
+designId: <%= ENV['DESIGN_ID'] %>
+
 # If you want to change the images for the key points (e.g. "Kickstarter is not a store")
 # They're in app/assets/images/#{pointer_number}-background.png
 # So, the first key point, it's at app/assets/images/1-background.png
