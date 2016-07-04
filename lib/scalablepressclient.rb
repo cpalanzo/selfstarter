@@ -13,7 +13,7 @@ module ScalablepressClientModule
 
   #we set some constants, including the base url for the API and the Scalablepress API Key - we set it in settings to point to an environment variable
 	API_URL = 'https://api.scalablepress.com/v2/'
-  SCALABLE_KEY = Settings.scalable_key
+  SCALABLE_KEY = ENV['SCALABLE_KEY']
   
   # so this is the first call
   def start_request(elements)
@@ -25,7 +25,7 @@ module ScalablepressClientModule
   end
   
   def build_availability
-    designId = Settings.designId
+    designId = ENV['DESIGN_ID']
     c = Curl::Easy.new
     c.url = API_URL + 'products/' + ENV['MALE_MODEL']
     c.http_auth_types = :basic

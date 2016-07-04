@@ -33,7 +33,7 @@ value_proposition: "If you are paid to play, you need this app!"
 
 # YouTube or Vimeo Video URL (The embed URL, without the query string options)
 # Replace /embed/ in your video url path with /v/ for video playback to work.
-video_embed_url: "https://www.youtube.com/embed/lnxdsYeEZpY"
+video_embed_url: <%= ENV['VIDEO_URL'] %>
 
 # If set to true, then the image at "/assets/video_placeholder.png" will be shown in place of the youtube
 # video.  When the user clicks it, the vid will replace the image and start playing.
@@ -124,16 +124,6 @@ payment_headline_3: "$79 Get it all! 1 Year Subscription AND the Backers T-Shirt
 payment_description_3: "Get it all! 1 Year Subscription, Special Edition Backer's T-shirt and Gold note status."
 payment_price_3: 7900
 special_3: "founder"
-
-
-###################Scalable###################
-m_shirt_model: "gildan-ultra-cotton-t-shirt"
-w_shirt_model: "gildan-ultra-ladies-t-shirt"
-
-### the designId for the order################
-designId: "56b6592459379ac931b8a000"
-### ScalablePress API#########################
-scalable_key: <%= ENV['SCALABLE_KEY'] %>
 
 # If you want to change the images for the key points (e.g. "Kickstarter is not a store")
 # They're in app/assets/images/#{pointer_number}-background.png
