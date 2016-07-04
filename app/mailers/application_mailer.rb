@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: Settings.mailgun_from
+  default from: ENV['MAILGUN_FROM']
   layout 'mailer'
 end

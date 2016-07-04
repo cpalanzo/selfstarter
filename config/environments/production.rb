@@ -75,9 +75,9 @@ Selfstarter::Application.configure do
   config.action_mailer.smtp_settings = {
     :port           => 587,
     :address        => "smtp.mailgun.org",
-    :domain         => Settings.mailgun_domain,
-    :user_name      => Settings.mailgun_user,
-    :password       => Settings.mailgun_pwd,
+    :domain         => ENV['MAILGUN_DOMAIN'],
+    :user_name      => ENV['MAILGUN_USER'],
+    :password       => ENV['MAILGUN_PWD'],
     :authentication => :plain,
   }
 end
