@@ -1,0 +1,8 @@
+<%= @user.name %> just funded 2theGig!
+Amount: <%= number_to_currency(@order.price.to_f , separator: ".", delimiter: ",") %>
+Stripe Charge ID: <%= @user.stripe_charge_id %>
+Option Chosen: <%= @order.payment_option_id %>
+<% if @founder%>
+This user also ordered a T-Shirt with the following details:
+<%= @info %>
+<% end %>

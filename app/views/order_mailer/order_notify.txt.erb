@@ -1,0 +1,8 @@
+Hi <%= @user.name %>
+Just to let you know that your donation of <%= number_to_currency(@order.price.to_f , separator: ".", delimiter: ",") %> was received.
+<% if @founder%>
+Your t-shirt will soon arrive!
+<% end %>
+Thank you so much for supporting 2theGig,
+all the best,
+2theGig crew
