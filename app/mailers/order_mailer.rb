@@ -5,7 +5,7 @@ class OrderMailer < ApplicationMailer
     @user = user
     @order = order
     @founder = founder
-    mail(to: info[:email], subject: 'Funding Confirmation')
+    mail(to: user.email, subject: 'Funding Confirmation')
   end
   
   def order_confirmation(info, user, order, founder)
