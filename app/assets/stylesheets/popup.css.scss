@@ -41,6 +41,7 @@ font-size: 1em;
   max-width: 500px;
   margin: 20px auto;
   color: #000;
+  z-index: 100;
   h2 {
     font-size: 1.5em;
     text-align: left;
@@ -155,6 +156,7 @@ font-size: 1em;
   display: flex;
   flex: 1;
   flex-flow: column wrap;
+  z-index: 100;
   .flex_head {
     display: flex;
     flex: 1;
@@ -164,14 +166,15 @@ font-size: 1em;
     padding: 20px;
     align-items: center;
     .flex_image {
-      width: 450px;
+      width: 100%;
       padding-left: 50px;
       max-width: 450px;
       min-width: 200px;
       justify-content: center;
       align-content: center;
       align-items: center;
-      img { 
+      img {
+        width: 90%;
         border-radius: 10%;
         border: 2px solid white;
       }
@@ -209,6 +212,7 @@ em {
     .flex_head {
       flex-flow: column nowrap;
       .flex_image {
+        padding: 0px;
         img { 
         }
         margin-bottom: 20px;
