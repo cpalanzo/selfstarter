@@ -7,7 +7,7 @@
 
 # Set your project goal here - dollar amount
 # NOTE: if you manually want to adjust your progress to test the site, head over to the Order model (app/models/order.rb)
-project_goal: 100000
+project_goal: 125000
 
 # If you want to edit the FAQ, head over to app/views/preorder/homepage/_faqs.html.erb
 
@@ -103,15 +103,15 @@ pay_in_page: true
 # second button
 payment_button_1: "$59 1 Year"
 payment_headline_1: "$59 special introductory rate, save 50%."
-payment_description_1: "Pre-order for just $59, the whole first year. Be the first to get the app when it launches and save over 50%."
+payment_description_1: "Pre-Launch, buy a complete year for just $59. Be the first to get the app when it launches and save over 50%."
 payment_price_1: 5900
 
 # this is the text for the button
-payment_button_2: "$75 T-Shirt"
+payment_button_2: "$75 Backer T-Shirt"
 # this is the headline
 payment_headline_2: "$75 Fund our work and get a T-shirt!"
 # this is the description
-payment_description_2: "Support our app like on Kickstarter. You’ll get a limited addition backers To The Gig T-Shirt! That's it. "
+payment_description_2: "Support our App like on Kickstarter. You’ll get a limited addition backers To The Gig T-Shirt!"
 # you have to set the price as integer so 1000 is equivalent to 10.00$ or 10$
 payment_price_2: 7500
 special_2: "founder"
@@ -120,8 +120,8 @@ special_2: "founder"
 
 # third button
 payment_button_3: "$79 1 Year + T-Shirt"
-payment_headline_3: "$79 Get it all! 1 Year Subscription AND the Backers T-Shirt"
-payment_description_3: "Get it all! 1 Year Subscription, Special Edition Backer's T-shirt and Gold note status."
+payment_headline_3: "$79 Get it all, a 1 Year Subscription AND the backers To The Gig T-Shirt"
+payment_description_3: "Get it all! 1 Year Subscription, Special Edition backer's T-shirt and Gold note status."
 payment_price_3: 7900
 special_3: "founder"
 
