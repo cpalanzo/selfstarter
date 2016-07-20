@@ -43,9 +43,9 @@ video_embed_url: <%= ENV['VIDEO_URL'] %>
 # NOTE: this only works for youtube video at the moment.  If its not for youtube, then just leave this property blank
 use_video_placeholder: false
 
-#payments
+#payments - set to false to have money count up
 
-use_payment_options: true
+use_payment_options: false
 
 
 # Stripe stuff. Stripe.com 
