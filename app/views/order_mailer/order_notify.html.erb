@@ -7,7 +7,8 @@
     <h1>Hi <%= @user.name %></h1>
     <p>Just to let you know that your donation of <%= number_to_currency(@order.price.to_f , separator: ".", delimiter: ",") %> was received.</p>
     <% if @founder%>
-      <p>Your t-shirt will soon arrive!</p>
+      <p>Your custom printed t-shirt arrive within about 2 weeks!</p>
+      <p>You wll receive To The Gig status updates and a notification when the app is available for download.</p>
     <% end %>
     <p>Thank you so much for supporting 2theGig,</p>
     <p>all the best,</p>
