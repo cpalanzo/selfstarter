@@ -8,6 +8,7 @@
 ##
 #we need to require 'json' because we need to do some parsing of the curb answers
 require 'json'
+require 'set'
 
 module ScalablepressClientModule
 
@@ -43,10 +44,13 @@ module ScalablepressClientModule
     colors = [ colors_male, colors_female ]
   end
   
-  def build_sizes(colors, gender)
+  def build_sizes(colors, gender, all=false)
     array_colors = []
+    defined_colors = gender == 'male' ? Settings.male_colors : Settings.female_colors
+    wanted_colors = defined_colors.split(/\s*,\s*/).map!(&:downcase).to_set
     sizes = { gender: gender, available: [] }
     colors.each do |color|
+      next unless all || wanted_colors.include?(color[:name].downcase) 
       color[:sizes].each do |size|
         size.downcase!
         color_obj = {
@@ -60,7 +64,8 @@ module ScalablepressClientModule
         sizes[size.to_sym].push(color_obj)
       end
     end
-    return sizes
+    return sizes unless sizes.count < 1
+    build_sizes(colors, gender, true)
   end
 
 	# here we assemble together our first call - this functions takes both the parsed url and the elements hash with the values we need to make the call

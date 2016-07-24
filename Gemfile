@@ -14,6 +14,7 @@ gem 'magnific-popup-rails'
 group :development do
   gem 'sqlite3'
   gem 'pry-rails'
+  gem 'spring'
 end
 
 group :production do
